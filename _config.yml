@@ -30,7 +30,7 @@ twitter_username: scalvetr
 github_username:  scalvetr
 
 # Build settings
-theme: jekyll-theme-architect
+theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
 
