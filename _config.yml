@@ -31,6 +31,9 @@ author:
   name: Sergi Calvet
   email: "sergi.calvet@gmail.com"
 
+paginate: 5
+paginate_path: "/blog/page:num/"
+
 # Build settings
 theme: minima
 minima:
@@ -41,6 +44,7 @@ minima:
 
 plugins:
   - jekyll-feed
+  - jekyll-pagination
 
 permalink: /:title/
 
