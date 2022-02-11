@@ -18,17 +18,27 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: scalvetr
+title: Sergi's on tech
 email: sergi.calvet@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Tech blog
+  Opinions, findings and other random thoughts on tech
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: scalvetr
 github_username: scalvetr
+linkedin_username: sergi-calvet-3b960836
+author:
+  name: Sergi Calvet
+  email: "sergi.calvet@gmail.com"
 
 # Build settings
 theme: minima
+minima:
+  skin: dark
+header_pages:
+  - about.md
+  - portfolio.md
+
 plugins:
   - jekyll-feed
 
@@ -51,3 +61,4 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
