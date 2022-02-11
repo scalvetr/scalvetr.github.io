@@ -281,6 +281,8 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll (~> 3.9.0)
+  jekyll-feed
+  jekyll-paginate
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)

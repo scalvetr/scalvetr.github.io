@@ -44,9 +44,9 @@ minima:
 
 plugins:
   - jekyll-feed
-  - jekyll-pagination
+  - jekyll-paginate
+  - jekyll-sitemap
 
-permalink: /:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default.
