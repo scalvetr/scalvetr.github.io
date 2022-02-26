@@ -25,18 +25,21 @@ skinparam note {
 }
 () start as " "
 rectangle store_data as "Store\nData"
-database store as "Database"
+database database as "Database"
+rectangle cdc as "CDC"
 hexagon publish_event as "Publish\nEvent"
 queue event_broker as "Event Broker"
 
 start -> store_data
-store_data ..> store
-store_data -> publish_event
-publish_event ..> event_broker
+store_data ..> database
+
 note right on link
-  If there's a failure publishing the event,
-  the two systems become inconsistent
+  DB changes +
+  event in the outbox table
 end note
+database .> cdc
+cdc -> publish_event
+publish_event ..> event_broker
 
 
 @enduml

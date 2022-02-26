@@ -19,24 +19,22 @@ skinparam rectangle<<tx>> {
     roundCorner 25
     borderColor #A03030
 }
-skinparam note {
 
-    borderColor #A03030
-}
 () start as " "
+
+rectangle local_transaction <<tx>> as "Local Transaction" #line.dashed {
+
 rectangle store_data as "Store\nData"
 database store as "Database"
 hexagon publish_event as "Publish\nEvent"
 queue event_broker as "Event Broker"
 
+}
+
 start -> store_data
 store_data ..> store
 store_data -> publish_event
 publish_event ..> event_broker
-note right on link
-  If there's a failure publishing the event,
-  the two systems become inconsistent
-end note
 
 
 @enduml
