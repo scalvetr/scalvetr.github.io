@@ -55,7 +55,7 @@ One system is updated, but what happens with the second one?
 
 A process must be defined that takes the responsibility to eventually update the other system.
 
-![Dual write eventually consistent](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-eventually-consistent.puml)
+![Dual write eventually consistent](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-eventually-consistent.png)
 
 In the diagram, the local transaction only involves System A, and the Update process is responsible 
 that after enough System B will be updated.
@@ -82,7 +82,7 @@ What is not so well known is that most of them also stores a log of all tha chan
 
 Change data capture consists on a process listening to changes on the database log and publishing them to the Event Broker.
 
-![Dual write cdc](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-cdc.puml)
+![Dual write cdc](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-cdc.png)
 
 By applying this technic, all changes in a database can be easily consumed by an external system.
 
