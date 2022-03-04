@@ -1,0 +1,41 @@
+@startuml
+!theme plain
+
+'use stereotype only for styling
+hide stereotype
+
+'show <<tx>> stereotype
+
+skinparam {
+    shadowing true
+    'defaultFontName SansSerif
+    'defaultFontSize 2
+    'defaultFontColor red
+}
+
+'https://plantuml-documentation.readthedocs.io/en/latest/formatting/all-skin-params.html#rectangle
+skinparam rectangle<<tx>> {
+    'borderThickness 2
+    roundCorner 25
+    borderColor #A03030
+}
+
+() start as " "
+
+rectangle local_transaction <<tx>> as "Local Transaction" #line.dashed {
+    rectangle store_data as "Store Data"
+    database system_a as "System A"
+}
+control process as "Update"
+database system_b as "System B"
+
+
+start -> store_data
+store_data ..> system_a
+
+system_a .> process
+process -> system_b
+
+
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+<style>
+classDiagram {
+  BackGroundColor white
+  LineThickness 1
+  LineColor black
+}
+</style>
+
+entity "CUSTOMERS" as customers {
+* customer_id : NUMBER <<generated>>
+---
+* surname : VARCHAR(50)
+* email : VARCHAR(35)
+}
+
+entity "ADRESSES" as addresses {
+* address_id : NUMBER <<generated>>
+---
+* customer_id : NUMBER
+street : VARCHAR(250)
+number : VARCHAR(5)
+city : VARCHAR(250)
+country : VARCHAR(250)
+zip_code : VARCHAR(5)
+}
+
+customers ||..o{ addresses
+customers -r[hidden]-> addresses
+
+@enduml

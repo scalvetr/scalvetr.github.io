@@ -1,0 +1,6 @@
+
+More information:
+* [Avoiding dual writes in event-driven applications](https://developers.redhat.com/articles/2021/07/30/avoiding-dual-writes-event-driven-applications)
+* [Dual Writes – The Unknown Cause of Data Inconsistencies](https://thorben-janssen.com/dual-writes/)
+* [Dual write and data inconsistency](https://www.johnnyhashoul.com/post/dual-write-and-data-inconsistency)
+* [Sending Reliable Event Notifications with Transactional Outbox Pattern](https://medium.com/event-driven-utopia/sending-reliable-event-notifications-with-transactional-outbox-pattern-7a7c69158d1b)

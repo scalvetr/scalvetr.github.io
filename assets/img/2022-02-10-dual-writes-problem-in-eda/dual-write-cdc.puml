@@ -1,0 +1,44 @@
+@startuml
+!theme plain
+
+'use stereotype only for styling
+hide stereotype
+
+'show <<tx>> stereotype
+
+skinparam {
+    shadowing true
+    'defaultFontName SansSerif
+    'defaultFontSize 2
+    'defaultFontColor red
+}
+
+'https://plantuml-documentation.readthedocs.io/en/latest/formatting/all-skin-params.html#rectangle
+skinparam rectangle<<tx>> {
+    'borderThickness 2
+    roundCorner 25
+    borderColor #A03030
+}
+skinparam note {
+
+    borderColor #A03030
+}
+() start as " "
+rectangle store_data as "Store\nData"
+database database as "Database"
+rectangle cdc as "CDC"
+hexagon publish_event as "Publish\nEvent"
+queue event_broker as "Event Broker"
+
+start -> store_data
+store_data ..> database
+
+note right on link
+  DB changes
+end note
+database .> cdc
+cdc -> publish_event
+publish_event ..> event_broker
+
+
+@enduml
