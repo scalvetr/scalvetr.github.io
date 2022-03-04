@@ -70,13 +70,13 @@ In the microservice context, what usually makes more sense is to choose the seco
 and then publish the event. It makes a lot of sense to have a consistent view of the aggregates you own, so your business
 process always use the most updated version of them.
 
-With this approach whatever change you listen from an external system can be outdated, so it's something you must consider
-wile designing your process.
+However, with this approach whatever change you listen from an external system can be outdated, so it's something you 
+must consider while designing your process.
 
 ### Change data capture
 
 Databases always offer an API to access to the current state of the different entities or aggregates stored.
-This is what they are for, event RDMS or NoSQL.
+This is what they are for, no mather if we are talking about `RDMS` or `NoSQL`.
 
 What is not so well known is that most of them also stores a log of all tha changes, in a similar way that and Event Broker does.
 
