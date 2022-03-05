@@ -53,22 +53,23 @@ write problem is to just update one them.
 
 One system is updated, but what happens with the second one?
 
-A process must be defined that takes the responsibility to eventually update the other system.
+A process must be put in place to take the responsibility to eventually update the other system.
 
 ![Dual write eventually consistent](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-eventually-consistent.png)
 
-In the diagram, the local transaction only involves System A, and the Update process is responsible 
-that after enough System B will be updated.
+In the diagram, the local transaction only involves `System A`, and the `Update` process is responsible 
+that after enough `System B` will be updated.
 
 ### Database first
 
 In the example above you could choose either to:
-* Publish the event and eventually update the database.
-* Update the database and eventually publish the event.
+* *Publish the event* and eventually *update the database*.
+* *Update the database* and eventually *publish the event*.
 
-In the microservice context, what usually makes more sense is to choose the second one: Update first your local storage
-and then publish the event. It makes a lot of sense to have a consistent view of the aggregates you own, so your business
-process always use the most updated version of them.
+In the microservice context, what usually makes more sense is to choose the second one: Update first the database
+and then publish the event. That's because the database is usually the internal store for your entities, so it makes a 
+lot of sense to have a consistent view of the aggregates you own, so your business process always use the most updated 
+version of them.
 
 However, with this approach whatever change you listen from an external system can be outdated, so it's something you 
 must consider while designing your process.
@@ -77,6 +78,7 @@ must consider while designing your process.
 
 Databases always offer an API to access to the current state of the different entities or aggregates stored.
 This is what they are for, no mather if we are talking about `RDMS` or `NoSQL`.
+For instance in a *relational* database you can use `JDBC`, `ODBC` or `SQL` commands to query the current state.
 
 What is not so well known is that most of them also stores a log of all tha changes, in a similar way that and Event Broker does.
 
