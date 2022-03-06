@@ -34,12 +34,17 @@ start -> store_data
 store_data ..> database
 
 note right on link
-  DB changes +
-  event in the outbox table
+  Write changes: "CUSTOMERS" & "ADDRESSES"
+  Write event: in the outbox table "CUSTOMER_EVENTS"
 end note
 database .> cdc
 cdc -> publish_event
 publish_event ..> event_broker
 
+note bottom of cdc
+Listen to changes
+in the outbox table
+ "CUSTOMER_EVENTS"
+end note
 
 @enduml

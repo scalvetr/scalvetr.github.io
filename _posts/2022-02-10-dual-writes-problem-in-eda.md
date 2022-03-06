@@ -67,20 +67,22 @@ In the example above you could choose either to:
 * *Update the database* and eventually *publish the event*.
 
 In the microservice context, what usually makes more sense is to choose the second one: Update first the database
-and then publish the event. That's because the database is usually the internal store for your entities, so it makes a 
-lot of sense to have a consistent view of the aggregates you own, so your business process always use the most updated 
-version of them.
+and then publish the event. That's because the database is usually the internal store for the domain data, you want to 
+keep it consistent so your business logic can easily access to the current state of your data.
 
-However, with this approach whatever change you listen from an external system can be outdated, so it's something you 
-must consider while designing your process.
+This way the local database is source of truth for the domain data, and the event broker is an eventual consistent copy.
+
+However, with this approach the local database is source of truth for the domain data, and the event broker is an 
+eventual consistent copy. So this is something you must consider while designing your process.
 
 ### Change data capture
 
-Databases always offer an API to access to the current state of the different entities or aggregates stored.
-This is what they are for, no mather if we are talking about `RDMS` or `NoSQL`.
-For instance in a *relational* database you can use `JDBC`, `ODBC` or `SQL` commands to query the current state.
+Databases always offer an API to access to the current state of the data they store.  This is what they are for no mather 
+if we are talking about `RDMS` or `NoSQL`.
+For instance in a *relational* database you can use `SQL` statement to query the current state.
 
-What is not so well known is that most of them also stores a log of all tha changes, in a similar way that and Event Broker does.
+What is not so well known is that most of them also stores a log of all tha changes, in a similar way that and Event 
+Broker does.
 
 Change data capture consists on a process listening to changes on the database log and publishing them to the Event Broker.
 
@@ -93,16 +95,24 @@ By applying this technic, all changes in a database can be easily consumed by an
 In the case of relational databases the event might contain information from different tables.
 Imagine the customer information modeled as follows in a relational database:
 
-![Customer Data Model](/assets/img/2022-02-10-dual-writes-problem-in-eda/customer_data_model.png)
+![Customer Data Model](/assets/img/2022-02-10-dual-writes-problem-in-eda/data_model_customer.png)
 
-Although this two tables can be modified within a single transaction, there's no guarantee the events on the `CUSTOMER` 
-table are published before the events in the `ADDRESSES` table.
+Although this two tables can be modified within a single transaction, they will produce two events and there's no 
+guarantee on the order or the time between the two events triggered from the `CUSTOMER` and `ADDRESSES` tables.
 
-So how would be such event build? It would be provably very complex.
+So how would and event containing information about this two tables be produced? It would be provably very complex.
 
 There's where the outbox pattern comes into the picture.
 
-The outbox pattern consists on writing messages to an outbox in the first system that ensures reliable delivery to the 
-event broker.
+The outbox pattern consists on writing the event to an outbox in the first system within the same transaction that you 
+write the data, that ensures reliable delivery to the event broker.
+
+The data model would be like this:
+
+![Customer Outbox Data Model](/assets/img/2022-02-10-dual-writes-problem-in-eda/data_model_customer_outbox.png)
+
+In this case `CUSTOMER_EVENTS` is the outbox table.
+
+The process would be like this:
 
 ![Dual write outbox](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-outbox.png)
