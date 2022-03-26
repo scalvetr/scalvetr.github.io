@@ -1,0 +1,15 @@
+@startuml
+
+
+left to right direction
+
+package "istio-system" {
+}
+package "istio-ingress" {
+}
+package "demo-app" {
+}
+
+"istio-ingress" -[hidden]-> "demo-app"
+
+@enduml

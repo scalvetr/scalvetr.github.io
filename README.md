@@ -32,5 +32,5 @@ jekyll build
 ### Run
 
 ```shell
-jekyll serve
+jekyll serve --drafts
 ```

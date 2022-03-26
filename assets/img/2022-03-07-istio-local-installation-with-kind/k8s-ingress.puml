@@ -1,0 +1,29 @@
+@startuml
+
+
+left to right direction
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+
+package "istio-system" {
+    KubernetesPod(istiod, "istiod", "")
+}
+package "istio-ingress" {
+    KubernetesPod(ingressgateway, "istio-ingress", "")
+}
+package "demo-app" {
+    KubernetesSvc(svc, "istio-demo-svc", "")
+    KubernetesPod(pod1, "istio-demo-pod1", "")
+}
+
+ingressgateway --> svc
+svc --> pod1
+
+@enduml
