@@ -197,6 +197,8 @@ spec:
 
 And create a `demo-app` namespace and deploy there the `demo-app` `Service`, `Deployment` and `VirtualService`.
 
+See the code [here](https://raw.githubusercontent.com/scalvetr/istio-playground/main/istio-test.yaml)
+
 ```shell
 # deploy and expose sample service
 kubectl create namespace demo-app
@@ -206,5 +208,4 @@ kubectl apply -f https://raw.githubusercontent.com/scalvetr/istio-playground/mai
 
 curl -vv "http://localhost/demo-app"
 # HTTP/1.1 200 OK
-
 ```
