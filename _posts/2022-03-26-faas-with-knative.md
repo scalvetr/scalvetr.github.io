@@ -14,7 +14,7 @@ It was initially popularized by Amazon back in 2014 with [AWS Lambda](https://aw
 all cloud providers offers a FaaS solution [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/),
 [Google Cloud Functions](https://cloud.google.com/functions). They will provably be covered by future posts.
 
-Although the cloud vendor offerings are the most popular entry point to the FaaS paradigm , there is another approach 
+Although the cloud vendor offerings are the most popular entry point to the FaaS paradigm, there is another approach 
 that also worth considering: The serverless solutions on top of Kubernetes.
 
 Cloud vendor offerings leverage on the manged services available in their platform for load balancing, auto-scaling, 
@@ -48,7 +48,7 @@ configuration. Modifying a configuration creates a new revision.
 retained for as long as useful.
 *Route:* Maps a network endpoint to one or more revisions.
 
-![Object Model](/2022-03-26-faas-with-knative/knative_serving_object_model.png)
+![Object Model](/assets/img/2022-03-26-faas-with-knative/knative_serving_object_model.png)
 
 
 ## Knative Eventing
@@ -68,7 +68,7 @@ Knative offers a [Broker](https://knative.dev/docs/eventing/broker/) abstraction
 for event ingress, and triggers for event delivery.
 
 
-![Object Model](/2022-03-26-faas-with-knative/knative_eventing_broker_workflow.svg)
+![Object Model](/assets/img/2022-03-26-faas-with-knative/knative_eventing_broker_workflow.svg)
 
 # Install Knative locally
 
@@ -191,23 +191,23 @@ curl -vv http://helloworld.default.127.0.0.1.nip.io
 
 The expected result:
 
-![curl output](/2022-03-26-faas-with-knative/knative_serving_test_request.png)
+![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_test_request.png)
 
 # Scale to zero
 
 Now it's very easy to test the scale to zero functionality. As we just did a request, we might expect a pod up and running, 
 ready to server more requests, this is precisely the one just served the request we just did.
 
-![curl output](/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_up.png)
+![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_up.png)
 
 After a few seconds pod enters the terminating state. This what we'd see in case of our `hello-world` revision `00001` 
 function.
 
-![curl output](/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_terminating.png)
+![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_terminating.png)
 
 ... and finally the function is scaled to zero.
 
-![curl output](/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_down.png)
+![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_down.png)
 
 we can easily check the deployment is set to `0` replicas.
 
@@ -216,4 +216,4 @@ kubectl get deployment helloworld-00001-deployment -o jsonpath='{.spec.replicas}
 #0% 
 ```
 
-![curl output](/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_replicas.png)
+![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_replicas.png)
