@@ -18,17 +18,18 @@ Example:
 
 **Distributed Transaction**
 
-One possible solution we might come up is to use a distributed transaction (2PC) to guarantee the atomicity of these two writes.
+One possible solution we might come up is to use a distributed transaction (2PC) to guarantee the atomicity of these two 
+writes.
 
-This strategy is not applicable because this kind of transaction is provably not supported by the event broker (for instance 
-Kafka doesn't). But even if it is supported, it is not a good idea, the reason is that in distributed systems you 
-don't want strong consistency between all participants because it does not scale, and according to the [CAP](https://en.wikipedia.org/wiki/CAP_theorem) 
-theorem would lead to availability issues.
+This strategy is not applicable because this kind of transaction is provably not supported by the event broker (for 
+instance Kafka doesn't). But even if it is supported, it is not a good idea, the reason is that in distributed systems 
+you don't want strong consistency between all participants because it does not scale, and according to the 
+[CAP](https://en.wikipedia.org/wiki/CAP_theorem) theorem would lead to availability issues.
 
 
 **Local Transaction**
 
-There are strategies to minimize the chance of data inconsistency by using the local transaction. For example by tying 
+There are strategies to minimize the chance of data inconsistency by using the *local transaction*. For example by tying 
 the event publishing to the BD transaction. With this approach the event would be published just before confirming the 
 DB transaction, and in case the event cannot be published, the local transactions would be rolled back.
 
@@ -41,8 +42,8 @@ The sequence is like this:
 3. Publish the event
 4. Commit the transaction
 
-This approach minimizes the chance of data inconsistency, but it is still possible that the event is published but finally the
-DB transaction cannot be confirmed.
+This approach minimizes the chance of data inconsistency, but it is still possible that the event is published but 
+finally the DB transaction cannot be confirmed.
 
 ## Outbox pattern
 
@@ -53,12 +54,13 @@ write problem is to just update one them.
 
 One system is updated, but what happens with the second one?
 
-A process must be put in place to take the responsibility to eventually update the other system.
+A process should be in place to take responsibility for eventually updating the other system.
 
 ![Dual write eventually consistent](/assets/img/2022-02-10-dual-writes-problem-in-eda/dual-write-eventually-consistent.png)
 
-In the diagram, the local transaction only involves `System A`, and the `Update` process is responsible 
-that after enough `System B` will be updated.
+In the diagram, the local transaction only involves `System A`, so after `System A` modification ahs been confirmed the 
+transaction can be confirmed to the client. Then, `Update` process is responsible for updating `System B` to make the 
+whole system consistent again.
 
 ### Database first
 
@@ -68,7 +70,7 @@ In the example above you could choose either to:
 
 In the microservice context, what usually makes more sense is to choose the second one: Update first the database
 and then publish the event. That's because the database is usually the internal store for the domain data, you want to 
-keep it consistent so your business logic can easily access to the current state of your data.
+keep it strongly consistent so your business logic can easily access to the current state of your data.
 
 This way the local database is source of truth for the domain data, and the event broker is an eventual consistent copy.
 
