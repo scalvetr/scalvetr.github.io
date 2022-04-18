@@ -125,4 +125,4 @@ always the one originating the contract.
 Then a **Pact Mock Service** can be used to test the producer side.
 
 
-![pact consumer testing](/assets/img/2022-04-18-consumer-driven-contract-testing/pact-contract-testing.svg)
+![pact consumer testing](/assets/img/2022-04-18-consumer-driven-contract-testing/pact-contract-testing.png)
