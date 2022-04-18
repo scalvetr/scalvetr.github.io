@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   width="1464.8889"
+   height="520.39435"
+   viewBox="0 0 1464.8889 520.39435"
+   xml:space="preserve"
+   sodipodi:docname="contract-testing.svg"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs126" /><sodipodi:namedview
+   id="namedview124"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="0.66269524"
+   inkscape:cx="795.23734"
+   inkscape:cy="291.23493"
+   inkscape:window-width="1303"
+   inkscape:window-height="656"
+   inkscape:window-x="1699"
+   inkscape:window-y="73"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="jigsaw_puzzle"
+   showguides="false" />
+<g
+   id="jigsaw_puzzle"
+   transform="translate(-0.411,-438.35767)">
+	
+<path
+   d="m 449.377,958.752 c 0,0 0.79395,-127.01155 0,-126.18 -16.291,7.475 -34.259,11.438 -52.397,11.438 -17.053,0 -33.599,-3.375 -49.179,-10.03 -15.033,-6.423 -28.497,-15.601 -40.015,-27.279 -23.725,-24.055 -36.533,-55.922 -36.065,-89.728 0.453,-32.706 13.529,-63.528 36.821,-86.788 23.291,-23.261 54.13,-36.296 86.842,-36.707 0.534,-0.009 1.063,-0.011 1.597,-0.011 18.14,0 36.104,3.965 52.396,11.438 v -125.12 c 0,0 -431.177587,-1.57084 -408.966,0 -22.091,0 -40,17.909 -40,40 V 918.75 c 0,22.092 17.909,40 40,40 z"
+   id="piece1"
+   style="display:inline;fill:#000080"
+   sodipodi:nodetypes="ccscccccscccsscc" /><path
+   d="m 478.51684,479.785 0.73616,179.338 c -5.298,-3.033 -15.108,-9.637 -24.136,-15.863 -16.723,-11.537 -36.252,-19.793 -58.14,-19.793 -0.408,0 -0.813,0.002 -1.224,0.008 -51.367,0.646 -93.326,42.548 -94.038,93.914 -0.244,17.599 4.289,34.119 12.378,48.354 16.382,28.824 47.36,48.268 82.884,48.268 21.888,0 40.968,-8.93 58.136,-19.793 10.578,-6.692 18.84,-12.832 24.138,-15.865 v 0.705 179.164 h 0.122 c -2.19995,0.61307 478.843,-1.6e-4 478.843,-1.6e-4 V 832.57167 c -17.46533,6.5207 -34.93067,12.79571 -52.396,11.438 -35.55658,-4.80947 -62.64109,-17.50916 -88.439,-37.309 -25.94404,-25.32272 -35.7545,-52.34722 -36.821,-89.728 1.56792,-30.36691 10.96842,-54.08719 36.821,-86.788 35.51563,-27.32922 57.90905,-36.55058 88.439,-36.718 19.50093,-0.25852 36.91893,3.64881 52.396,11.438 V 479.78484 c 0,0 -476.22204,1.43647 -479.69916,1.6e-4 z"
+   id="piece2"
+   style="display:inline;fill:#a40000;fill-opacity:1"
+   sodipodi:nodetypes="cccscscsccccccccccccccc" /><text
+   xml:space="preserve"
+   style="font-size:37.3333px;fill:#000000"
+   x="142.60605"
+   y="466.72223"
+   id="text2330"><tspan
+     sodipodi:role="line"
+     id="tspan2328"
+     x="142.60605"
+     y="466.72223">Consumer</tspan></text><text
+   xml:space="preserve"
+   style="font-size:37.3333px;fill:#000000"
+   x="1119.0707"
+   y="466.72223"
+   id="text2330-0"><tspan
+     sodipodi:role="line"
+     id="tspan2328-4"
+     x="1119.0707"
+     y="466.72223">Provider</tspan></text><path
+   d="m 985.60059,479.9495 0.73616,179.338 c -5.298,-3.033 -15.108,-9.637 -24.136,-15.863 -16.723,-11.537 -36.252,-19.793 -58.14,-19.793 -0.408,0 -0.813,0.002 -1.224,0.008 -51.367,0.646 -93.326,42.548 -94.038,93.914 -0.244,17.599 4.289,34.119 12.378,48.354 16.382,28.824 47.36,48.268 82.884,48.268 21.888,0 40.968,-8.93 58.136,-19.793 10.578,-6.692 18.84,-12.832 24.138,-15.865 v 0.705 179.164 h 0.122 438.84305 c 22.092,0 40,-17.909 40,-40 v -398.437 c 0.034,-26.68974 -13.1804,-39.98389 -40,-40 z"
+   id="piece2-6"
+   style="display:inline;fill:#000080;fill-opacity:1"
+   sodipodi:nodetypes="cccscscsccccccsccc" /><text
+   xml:space="preserve"
+   style="font-size:37.3333px;fill:#000000"
+   x="543.64716"
+   y="466.72223"
+   id="text4716"><tspan
+     sodipodi:role="line"
+     id="tspan4714"
+     x="543.64716"
+     y="466.72223">Contract Test</tspan></text></g>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</svg>

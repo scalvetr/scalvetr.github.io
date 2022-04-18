@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   width="957.80505"
+   height="519.66516"
+   viewBox="0 0 957.80505 519.66516"
+   xml:space="preserve"
+   sodipodi:docname="producer-testing.svg"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs126" /><sodipodi:namedview
+   id="namedview124"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="0.69622675"
+   inkscape:cx="451.00249"
+   inkscape:cy="274.33591"
+   inkscape:window-width="1303"
+   inkscape:window-height="656"
+   inkscape:window-x="31"
+   inkscape:window-y="38"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="jigsaw_puzzle"
+   showguides="false" />
+<g
+   id="jigsaw_puzzle"
+   transform="translate(-0.411,-439.08684)">
+	
+<path
+   d="m 449.377,958.752 c 0,0 0.79395,-127.01155 0,-126.18 -16.291,7.475 -34.259,11.438 -52.397,11.438 -17.053,0 -33.599,-3.375 -49.179,-10.03 -15.033,-6.423 -28.497,-15.601 -40.015,-27.279 -23.725,-24.055 -36.533,-55.922 -36.065,-89.728 0.453,-32.706 13.529,-63.528 36.821,-86.788 23.291,-23.261 54.13,-36.296 86.842,-36.707 0.534,-0.009 1.063,-0.011 1.597,-0.011 18.14,0 36.104,3.965 52.396,11.438 v -125.12 c 0,0 -431.177587,-1.57084 -408.966,0 -22.091,0 -40,17.909 -40,40 V 918.75 c 0,22.092 17.909,40 40,40 z"
+   id="piece1"
+   style="display:inline;fill:#000080"
+   sodipodi:nodetypes="ccscccccscccsscc" /><path
+   d="m 478.51684,479.785 0.73616,179.338 c -5.298,-3.033 -15.108,-9.637 -24.136,-15.863 -16.723,-11.537 -36.252,-19.793 -58.14,-19.793 -0.408,0 -0.813,0.002 -1.224,0.008 -51.367,0.646 -93.326,42.548 -94.038,93.914 -0.244,17.599 4.289,34.119 12.378,48.354 16.382,28.824 47.36,48.268 82.884,48.268 21.888,0 40.968,-8.93 58.136,-19.793 10.578,-6.692 18.84,-12.832 24.138,-15.865 v 0.705 179.164 h 0.122 438.843 c 22.092,0 40,-17.909 40,-40 V 519.785 c 0.0336,-26.68974 -13.18035,-39.98389 -40,-40 z"
+   id="piece2"
+   style="display:inline;fill:#a40000;fill-opacity:1"
+   sodipodi:nodetypes="cccscscsccccccsccc" /><text
+   xml:space="preserve"
+   style="font-size:37.3333px;fill:#000000"
+   x="142.60605"
+   y="466.72223"
+   id="text2330"><tspan
+     sodipodi:role="line"
+     id="tspan2328"
+     x="142.60605"
+     y="466.72223">Consumer</tspan></text><text
+   xml:space="preserve"
+   style="font-size:37.3333px;fill:#000000"
+   x="652.55164"
+   y="467.45142"
+   id="text2334"><tspan
+     sodipodi:role="line"
+     id="tspan2332"
+     x="652.55164"
+     y="467.45142">Mock</tspan></text></g>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</svg>
