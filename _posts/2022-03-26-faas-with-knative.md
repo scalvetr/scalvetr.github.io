@@ -70,13 +70,15 @@ for event ingress, and triggers for event delivery.
 
 ![Object Model](/assets/img/2022-03-26-faas-with-knative/knative_eventing_broker_workflow.svg)
 
-# Install Knative locally
+# Install Knative
+
+## Installation considerations
 
 *Istio*
 
 For this installation we'll consider we already have a cluster with [Istio](https://istio.io/) installed. Istio is one 
 of the options available as a networking layer for Knative (along with Courier and Kourier). By using Istio you can 
-leverage Istio to secure, observe, and expose services.
+leverage Istio to secure, observe and expose services.
 
 *Knative Operator*
 
@@ -87,9 +89,12 @@ Knative, without the need of any additional tool, just with `kubectl`. More info
 
 *Knative Serving*
 
-As explained earlier, there are two main components in Knative. Most of the features related with FaaS are provided by
-the *Knative Serving* component, so this will be the one installed.
+Knative Serving component is the one related with the serverless deployment. It allows deploying services and deals 
+automatically with the network routing, autoscaling, versions ...
 
+## Install locally
+
+So let's move on with the installation of Knative Serving component by using the Knative operator.
 
 Assuming Istio is already in place (you can find instructions for a local installation 
 [here](https://github.com/scalvetr/istio-playground/blob/main/README.md)), we're going to follow the following guide: 
@@ -195,13 +200,22 @@ The expected result:
 
 # Scale to zero
 
-Now it's very easy to test the scale to zero functionality. As we just did a request, we might expect a pod up and running, 
-ready to server more requests, this is precisely the one just served the request we just did.
+[Scale to zero](https://knative.dev/docs/serving/autoscaling/scale-to-zero) means when functions are not used they don't 
+consume resources and whenever a new request tries to hit the function, the serverless platform (Knative in our case) 
+starts the container. Once started it is keep alive for a wile to be able to attend further requests to the same 
+function faster.
+
+Once a service has been scaled to zero, next request to same service will require a new container to be started 
+(cold start) this impacts the latency for these calls. This technology is meant for functions with small footprint
+not for big monoliths with big start times.
+
+To *test* the scale to zero, after doing a request to the service, we might expect a pod up and running, ready to server 
+more requests, this is precisely the one just served the request we just did.
 
 ![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_up.png)
 
-After a few seconds pod enters the terminating state. This what we'd see in case of our `hello-world` revision `00001` 
-function.
+After a few seconds (30 by default) pod enters the terminating state. This what we'd see in case of our `hello-world` 
+revision `00001` function.
 
 ![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_terminating.png)
 
@@ -217,3 +231,10 @@ kubectl get deployment helloworld-00001-deployment -o jsonpath='{.spec.replicas}
 ```
 
 ![curl output](/assets/img/2022-03-26-faas-with-knative/knative_serving_scale_to_zero_replicas.png)
+
+Now, if we hit the service again, we'll see a new pod has been created.
+```shell
+curl -vv http://helloworld.default.127.0.0.1.nip.io
+
+kubectl get pods
+```
