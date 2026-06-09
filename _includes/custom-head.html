@@ -1,33 +1,31 @@
-<!-- Mermaid.js for Architecture Diagrams -->
-<script src="[https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js](https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js)"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. Find all Jekyll-generated code blocks marked as Mermaid
+
         const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
 
         if (codeBlocks.length > 0) {
-            // 2. Convert them into standard divs that Mermaid can read
             codeBlocks.forEach(function(codeBlock) {
                 const preBlock = codeBlock.parentNode;
                 const mermaidDiv = document.createElement('div');
                 mermaidDiv.className = 'mermaid';
-
-                // Use textContent to safely preserve the raw diagram syntax and line breaks
                 mermaidDiv.textContent = codeBlock.textContent;
-
-                // Replace the whole <pre> block with the new <div>
                 preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
             });
 
-            // 3. Initialize Mermaid to render the new divs
             mermaid.initialize({
                 startOnLoad: true,
-                theme: 'dark',
-                fontFamily: 'monospace'
+                theme: 'base', // 'base' allows us to completely override with our own hex codes
+                themeVariables: {
+                    background: '#1e1e1e',          // Matches standard dark mode backgrounds
+                    primaryColor: '#263238',        // Slate/Navy blue for the main node fill
+                    primaryTextColor: '#ffffff',    // Crisp white text inside nodes
+                    primaryBorderColor: '#64b5f6',  // Azure blue accent for node borders
+                    lineColor: '#90a4ae',           // Muted slate grey for connection arrows
+                    tertiaryColor: '#37474f',       // Slightly lighter slate for subgraphs/groups
+                    fontFamily: 'monospace'
+                }
             });
         }
     });
 </script>
-
-<!-- Favicon placeholder -->
-<link rel="icon" type="image/png" href="/assets/img/profile_picture.png">
