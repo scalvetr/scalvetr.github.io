@@ -1,13 +1,32 @@
 <!-- Mermaid.js for Architecture Diagrams -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="[https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js](https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js)"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    mermaid.initialize({ 
-      startOnLoad: true, 
-      theme: 'dark',
-      fontFamily: 'monospace'
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Find all Jekyll-generated code blocks marked as Mermaid
+        const codeBlocks = document.querySelectorAll('pre code.language-mermaid');
+
+        if (codeBlocks.length > 0) {
+            // 2. Convert them into standard divs that Mermaid can read
+            codeBlocks.forEach(function(codeBlock) {
+                const preBlock = codeBlock.parentNode;
+                const mermaidDiv = document.createElement('div');
+                mermaidDiv.className = 'mermaid';
+
+                // Use textContent to safely preserve the raw diagram syntax and line breaks
+                mermaidDiv.textContent = codeBlock.textContent;
+
+                // Replace the whole <pre> block with the new <div>
+                preBlock.parentNode.replaceChild(mermaidDiv, preBlock);
+            });
+
+            // 3. Initialize Mermaid to render the new divs
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                fontFamily: 'monospace'
+            });
+        }
     });
-  });
 </script>
 
 <!-- Favicon placeholder -->
