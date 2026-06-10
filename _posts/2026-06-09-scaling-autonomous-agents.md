@@ -16,8 +16,6 @@ When you strip away the modern terminology of "reasoning engines" and "cognitive
 * Agentic Orchestration is RPC (Remote Procedure Call) routing.
 * Model Inference Time is an extreme form of variable processing latency.
 
-When you deploy three autonomous agents that must collaborate, share state, and reach a consensus, you are no longer solving an AI prompt problem—you are solving an integration and control-flow problem. You are engineering for network partitions, distributed state management, race conditions, and partial failure domains.
-
 Over the decades, the software industry has established proven engineering practices for dealing with distributed architecture—lessons learned the hard way, often paid for in blood from past production outages. However, with the intense focus currently directed at novel agentic frameworks, much of this foundational knowledge is losing the attention it deserves. We are seeing a proliferation of tightly coupled execution chains that look fantastic in flashy MVPs and small-scale demos, but completely ignore the physical constraints of these distributed nodes. When forced to scale, these fragile architectures inevitably collapse.
 
 While these synchronous patterns might survive in isolated or early-stage environments, they face a severe reality check in production. As systems scale in throughput and operational consequence, fragile architectures inevitably collapse.
@@ -29,9 +27,9 @@ This document explores the architectural shift required for enterprise agentic e
 ## 1. The Problem Statement — The Synchronous Illusion
 The industry is currently defaulting to the "Synchronous Illusion"—a trend where complex agentic workflows are constructed using blocking communication and rigid in-memory language loops, often rebranded under high-level terminology like "Agentic Orchestration".
 
-This fragility typically starts at the integration layer. FastAPI dominates agentic development because its native async capabilities and auto-generated OpenAPI schemas make LLM tool discoverability effortless. However, wrapping a 60-second multi-agent reasoning loop behind a single @app.post endpoint is an architectural trap that practically guarantees load balancer timeouts.
+This fragility typically starts at the integration layer. FastAPI dominates agentic development because its native async capabilities and auto-generated OpenAPI schemas make LLM tool discoverability effortless. However, wrapping a **60-second** multi-agent reasoning loop behind a single `@app.post` endpoint is an architectural trap that practically guarantees load balancer timeouts.
 
-Popular frameworks like LangChain and CrewAI reinforce this synchronous bias by treating blocking execution as a first-class citizen. Their default .invoke() or .run() methods halt the main execution thread, prioritizing local developer convenience over distributed production resilience.
+Popular frameworks like LangChain and CrewAI reinforce this synchronous bias by treating blocking execution as a first-class citizen. Their default `.invoke()` or `.run()` methods halt the main execution thread, prioritizing local developer convenience over distributed production resilience.
 
 The structural flaw in this approach is the failure to account for the extreme latency variance of foundation models. In traditional distributed systems, downstream degradation is mitigated by network timeouts, retries, and circuit breakers—guardrails that are often enforced automatically by enterprise API gateways or service meshes.
 
@@ -39,12 +37,12 @@ However, inheriting these standard synchronous guardrails for LLMs is an archite
 
 ### The Failure Mode: The Cascading Collapse
 Consider a standard point-to-point synchronous pipeline in a financial context: An Orchestrator Agent (Agent A) makes a synchronous REST call to a Risk Evaluation Agent (Agent B), which subsequently calls an external Market Data API.
-* The Market Data API responds in 200ms.
-* Agent B ingests the data and begins its Chain-of-Thought reasoning. Due to a complex context window, inference takes 45 seconds.
-* The HTTP connection from Agent A to Agent B is subjected to a standard infrastructure gateway timeout configured for 30 seconds.
-* At 30 seconds, the connection is cut. Agent A receives a 504 Gateway Timeout and the broader enterprise workflow fails.
-* Meanwhile, Agent B continues processing and eventually completes its 45-second inference—but the caller has already hung up. The expensive computation is entirely wasted, and the resulting state is dropped.
-* The Compounding Failure: If the network mesh or orchestrator does have automatic retries enabled, Agent A immediately triggers a second request. Agent B is now processing two concurrent 45-second tasks, recursively exhausting the LLM provider's rate limits and bottlenecking the execution engine's thread pool.
+* The Market Data API responds in **200ms**.
+* Agent B ingests the data and begins its Chain-of-Thought reasoning. Due to a complex context window, inference takes **45 seconds**.
+* The HTTP connection from Agent A to Agent B is subjected to a standard infrastructure gateway timeout configured for **30 seconds**.
+* At **30 seconds**, the connection is cut. Agent A receives a **504 Gateway Timeout** and the broader enterprise workflow fails.
+* Meanwhile, Agent B continues processing and eventually completes its **45-second** inference—but the caller has already hung up. The expensive computation is entirely wasted, and the resulting state is dropped.
+* **The Compounding Failure:** If the network mesh or orchestrator does have automatic retries enabled, Agent A immediately triggers a second request. Agent B is now processing **two concurrent 45-second tasks**, recursively exhausting the LLM provider's rate limits and bottlenecking the execution engine's thread pool.
 
 When agents are daisy-chained synchronously, enforcing standard HTTP timeouts inevitably orphans the model mid-thought. Extending those timeouts exhausts connection pools. Synchronous orchestration in a non-deterministic environment is an invitation to systemic fragility.
 
@@ -56,11 +54,10 @@ To resolve the friction of cross-vendor and cross-framework interoperability, th
 
 The strength of A2A lies in its implementation of **stateful task lifecycles**, which effectively breaks the synchronous blocking trap at the network protocol level.
 
-In an A2A-compliant handshake:
-1. A client agent initiates a request payload.
-2. The remote agent executes immediate structural validation and returns an acknowledgment (e.g., `HTTP 202 Accepted` with a task state of `working`). The initial network connection is immediately closed.
-3. The remote agent processes the heavy inference workload autonomously.
-4. Once the execution is complete (or if intermediate reasoning steps are available), the remote agent delivers the execution statuses or token artifacts back to the requester via **Asynchronous Push** (Webhooks) or **Server-Sent Events (SSE)**.
+The A2A-compliant handshake operates on a snappier rhythm:
+1. **Acknowledge Instantly:** A client agent initiates a request payload. The remote agent executes immediate structural validation and returns an acknowledgment (e.g., `HTTP 202 Accepted` with a task state of `working`). The initial network connection is immediately closed.
+2. **Compute Asynchronously:** The remote agent processes the heavy inference workload fully decoupled from the caller's thread.
+3. **Push Results Back:** Once the execution is complete (or if intermediate reasoning steps are available), the remote agent delivers the execution statuses or token artifacts back to the requester via **Asynchronous Push** (Webhooks) or **Server-Sent Events (SSE)**.
 
 This decoupling of the network request from the computational fulfillment makes A2A the ideal standard for cross-organizational handshakes where boundary crossing, security negotiation, and framework agnosticism are paramount.
 
@@ -68,12 +65,12 @@ This decoupling of the network request from the computational fulfillment makes 
 
 ## 3. The Event-Driven Backbone — Where EDA is Mandatory
 
-While A2A perfectly optimizes point-to-point negotiation across boundaries, deep-tier enterprise automation demands an underlying asynchronous event broker—such as Apache Kafka or AWS EventBridge—to serve as the system’s internal nervous system.
+While the A2A protocol perfectly optimizes *external* point-to-point negotiations across organizational boundaries, it does not solve the internal routing and state management problem. Deep-tier enterprise automation demands an underlying asynchronous event broker—such as Apache Kafka or AWS EventBridge—to serve as the system’s *internal* nervous system.
 
 An Event-Driven Architecture (EDA) ensures the resilience and scalability of the internal agentic ecosystem through three critical pillars.
 
 ### Pillar 1: The Shock Absorber (Backpressure Management)
-There is a severe temporal impedance mismatch between enterprise operational telemetry (moving in milliseconds) and LLM inference (moving in seconds). LLMs are inherently "slow consumers."
+There is a severe temporal impedance mismatch between enterprise operational telemetry (moving in milliseconds) and LLM inference (moving in seconds). LLMs are inherently "slow consumers".
 
 If a high-throughput system—such as a live inventory feed or a market tick plant—pushes data synchronously into an agentic layer, the execution engine will crash under the volume. A pull-based event broker acts as a buffer. It natively levels this mismatch by ingesting high-throughput events and allowing the inference engines to pull and process state at their own sustainable pace, ensuring zero data loss during traffic spikes.
 
@@ -83,7 +80,7 @@ Point-to-point protocols, even asynchronous ones, require the producer to have e
 ```mermaid
 graph TD
     subgraph Upstream Enterprise
-        S1[Core Banking Event] --> B[(Enterprise Event Broker)]
+        S1[Core Banking Event] --> B([Event Broker])
         S2[Telemetry Feed] --> B
     end
 
@@ -142,7 +139,20 @@ Not every AI workflow requires an event-driven backbone. If a system handles low
 However, if your system is experiencing cascading timeouts, exhausting connection pools under load, or failing to meet execution SLAs, it is time to migrate. When that threshold is crossed, avoid a "big bang" rewrite. Instead, adopt the Agentic Strangler Fig Pattern:
 Instead of rebuilding the entire system from scratch, adopt the Agentic Strangler Fig Pattern by incrementally introducing decoupling to your most critical bottlenecks:
 
-* **Targeted Backpressure (The Event Broker):** Rather than wiring the whole system to a broker at once, identify the single slowest, most failure-prone step in your synchronous chain. By introducing an event topic or queue strictly in front of that specific component, you isolate the "slow consumer." The broker naturally absorbs upstream traffic spikes, allowing the heavy inference engine to pull tasks at its own pace without forcing the original caller to block and time out.
+* **Targeted Backpressure (The Event Broker):** Rather than wiring the whole system to a broker at once, identify the single slowest, most failure-prone step in your synchronous chain. By introducing an event topic or queue strictly in front of that specific component, you isolate the "slow consumer"
+  ```python
+    # The Synchronous Trap
+    # response = research_agent.invoke({"task": "analyze_market"})
+    
+    # The Strangler Fig Decoupling
+    # 1. Upstream caller pushes to broker and moves on instantly
+    kafka_producer.send('agent_tasks', key='task_882', value={"task": "analyze_market"})
+    
+    # 2. Worker agent pulls at its own sustainable pace
+    for message in kafka_consumer.poll():
+    research_agent.execute(message.value)
+  ```
+  The broker naturally absorbs upstream traffic spikes, allowing the heavy inference engine to pull tasks at its own pace without forcing the original caller to block and time out
 * **State Externalization (The Database):** Asynchronous execution shatters the illusion of local memory. Once you introduce a queue, agents can no longer rely on passing variables within a local Python loop. The system's state—its context, memory, and intermediate reasoning—must be externalized to a durable database (like PostgreSQL or DynamoDB). This ensures that the workflow can be safely paused, placed on an event bus, and later resumed by an entirely different worker node without data loss.
 
 ## Conclusion
